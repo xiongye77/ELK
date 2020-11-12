@@ -1,0 +1,8 @@
+
+
+
+How to use Grok filter
+In order to extract the fields we want to use, we need to use the Grok filter. Please refer to the "logstash.conf" file for our current filters.
+Here is the instruction of Grok filter syntax.
+To test whether your filter is working or not, use the Grok debugger (https://grokdebug.herokuapp.com/). You can also find this debugger in Kibana -> Dev tools -> Grok debugger.
+There are predifined Grok patterns you can use, please refer to this Github repo.
