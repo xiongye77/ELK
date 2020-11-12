@@ -1,0 +1,24 @@
+---
+enabled: true
+
+filebeat.config.inputs:
+    enabled: true
+    path: ${path.config}/configs/*.yml
+  
+# processors:
+# - add_cloud_metadata:
+
+output:
+  logstash:
+    enabled: true
+    hosts: 
+      - elk:5044
+    ssl:
+      certificate_authorities:
+        - /etc/pki/tls/certs/logstash-beats.crt
+
+# output.elasticsearch:
+# - hosts: ['elasticsearch:9200']
+# - username: elastic
+# - password: changeme
+  
