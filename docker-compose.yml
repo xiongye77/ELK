@@ -1,0 +1,31 @@
+---
+version: "3.4"
+services:
+    filebeat:
+        image: store/elastic/filebeat:6.8.7
+        volumes:
+            - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+            - ./filebeat/custom-configs:/usr/share/filebeat/configs/:rw
+            - ./logs:/logs:rw
+            - ./filebeat/logstash-beats.crt:/etc/pki/tls/certs/logstash-beats.crt
+            - filebeat_storage:/usr/share/filebeat/data:rw
+        links:
+            - elk
+        depends_on:
+            - elk
+
+    elk:
+        image: sebp/elk:671
+        ports:
+        - "5601:5601" # Kibana Web UI
+        - "9200:9200" # Elastic Search JSON Interface
+        - "9300:9300" # Elastic Transport Interface
+        - "5044:5044" # Logstash Beats Interface
+        volumes:
+        - ./logstash/bin/logstash.conf:/etc/logstash/conf.d/80-grok.conf
+        - elk_storage:/var/lib/elasticsearch
+
+volumes:
+  elk_storage:
+  filebeat_storage:
+
